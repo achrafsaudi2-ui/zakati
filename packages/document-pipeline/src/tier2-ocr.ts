@@ -10,7 +10,7 @@ import type {
   DocumentParser,
   ParseResult,
   ProcessingState,
-} from './types.js';
+} from './types';
 
 export class OCRParser implements DocumentParser {
   readonly tier = 2 as const;
@@ -59,7 +59,7 @@ export class OCRParser implements DocumentParser {
     onProgress({ stage: 'identifying', tier: 2, progress: 85, message: 'Identifying accounts' });
 
     // Import lazily to avoid circular dep
-    const { detectIssuerFromText, extractFromText } = await import('./shared-extraction.js');
+    const { detectIssuerFromText, extractFromText } = await import('./shared-extraction');
     const issuer = detectIssuerFromText(fullText);
     const accounts = await extractFromText(fullText, issuer);
 

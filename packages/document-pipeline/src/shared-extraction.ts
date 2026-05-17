@@ -4,7 +4,7 @@
 // Tier 1 calls these directly; Tier 2 imports them after OCR has produced text.
 // =============================================================================
 
-import type { ExtractedAccount } from './types.js';
+import type { ExtractedAccount } from './types';
 
 const ISSUER_PATTERNS: { id: string; pattern: RegExp }[] = [
   { id: 'sab',          pattern: /Saudi British Bank|\bSAB\b/i },

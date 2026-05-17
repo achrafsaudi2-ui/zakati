@@ -11,7 +11,7 @@ import type {
   ExtractedAccount,
   ParseResult,
   ProcessingState,
-} from './types.js';
+} from './types';
 
 export class PDFTextParser implements DocumentParser {
   readonly tier = 1 as const;

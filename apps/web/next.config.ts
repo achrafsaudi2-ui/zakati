@@ -4,7 +4,7 @@ const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ['@zakati/engine', '@zakati/document-pipeline'],
-  // Sanity image CDN — `unoptimized` for Cloudflare Pages (no runtime optimizer)
+
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -12,7 +12,6 @@ const config: NextConfig = {
     ],
   },
 
-  // Tighten security on every response
   async headers() {
     return [
       {
@@ -27,7 +26,6 @@ const config: NextConfig = {
     ];
   },
 
-  // PDF.js worker needs no transformation
   webpack: (config) => {
     config.resolve.alias.canvas = false;
     return config;

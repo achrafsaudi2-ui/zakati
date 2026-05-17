@@ -7,8 +7,8 @@
 //   Lenient:   ~SAR  7,369 net (haul-strict, lowest balance)
 // =============================================================================
 
-import { calculateZakat } from './engine.js';
-import { buildMohamedCase } from './fixtures.js';
+import { calculateZakat } from './engine';
+import { buildMohamedCase } from './fixtures';
 
 function fmtMoney(n: number, ccy = 'SAR'): string {
   return `${ccy} ${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;

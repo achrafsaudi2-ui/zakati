@@ -8,7 +8,7 @@ import type {
   ParseResult,
   PipelineOptions,
   ProcessingState,
-} from './types.js';
+} from './types';
 
 export class DocumentPipeline {
   constructor(private readonly parsers: readonly DocumentParser[]) {

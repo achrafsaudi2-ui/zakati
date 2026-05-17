@@ -12,7 +12,7 @@ import type {
   ExtractedAccount,
   ParseResult,
   ProcessingState,
-} from './types.js';
+} from './types';
 
 const MODEL_ID = 'Phi-3.5-mini-instruct-q4f16_1-MLC';
 
