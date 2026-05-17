@@ -2,16 +2,16 @@
 // @zakati/document-pipeline — Public API
 // =============================================================================
 
-export * from './types.js';
-export { DocumentPipeline } from './orchestrator.js';
-export { PDFTextParser } from './tier1-pdf.js';
-export { OCRParser } from './tier2-ocr.js';
-export { AIExtractor } from './tier3-ai.js';
+export * from './types';
+export { DocumentPipeline } from './orchestrator';
+export { PDFTextParser } from './tier1-pdf';
+export { OCRParser } from './tier2-ocr';
+export { AIExtractor } from './tier3-ai';
 
-import { DocumentPipeline } from './orchestrator.js';
-import { PDFTextParser } from './tier1-pdf.js';
-import { OCRParser } from './tier2-ocr.js';
-import { AIExtractor } from './tier3-ai.js';
+import { DocumentPipeline } from './orchestrator';
+import { PDFTextParser } from './tier1-pdf';
+import { OCRParser } from './tier2-ocr';
+import { AIExtractor } from './tier3-ai';
 
 /**
  * Convenience factory — registers all three tiers.
