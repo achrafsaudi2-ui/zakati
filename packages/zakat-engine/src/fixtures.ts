@@ -7,7 +7,7 @@
 //   Strict:   ~SAR 20,632 net (snapshot, ignoring haul gates on Pre-Soon etc.)
 // =============================================================================
 
-import type { CalcInput, FxRates, NisabConfig } from './types.js';
+import type { CalcInput, FxRates, NisabConfig } from './types';
 
 export const fxRates: FxRates = {
   base: 'SAR',
