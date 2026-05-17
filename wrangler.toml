@@ -1,9 +1,6 @@
-# Cloudflare Pages configuration for the Zakati app.
-# This file is auto-detected by Cloudflare Pages during the build step
-# and enables Node.js compatibility, which the bundled dependencies
-# (@react-pdf/renderer, pdfjs-dist, @sanity/client) require.
+# Cloudflare Pages — Zakati is deployed as a static site.
+# This file is intentionally minimal because no Functions/Workers are used.
 
 name = "zakati"
-compatibility_date = "2024-11-01"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = "apps/web/.vercel/output/static"
+compatibility_date = "2024-12-16"
+pages_build_output_dir = "apps/web/out"
