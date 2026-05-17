@@ -25,7 +25,7 @@ import type {
   RentalIncomeCash,
   Stock,
   View,
-} from './types.js';
+} from './types';
 
 // -----------------------------------------------------------------------------
 // Constants (admin-overridable via CMS in production)
