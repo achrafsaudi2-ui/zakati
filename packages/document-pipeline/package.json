@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@zakati/engine": "*",
+    "@zakati/engine": "workspace:*",
     "pdfjs-dist": "^4.7.76",
     "tesseract.js": "^5.1.1",
     "@mlc-ai/web-llm": "^0.2.79"
