@@ -4,7 +4,7 @@ const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ['@zakati/engine', '@zakati/document-pipeline'],
-ts  typescript: {
+  ts  typescript:
     ignoreBuildErrors: true,
   },
   eslint: {
