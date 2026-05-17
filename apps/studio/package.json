@@ -1,0 +1,25 @@
+{
+  "name": "@zakati/studio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "seed": "sanity exec ./seed.ts --with-user-token"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.22.0",
+    "@sanity/vision": "^3.62.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.62.0",
+    "styled-components": "^6.1.13"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "typescript": "^5.6.0"
+  }
+}

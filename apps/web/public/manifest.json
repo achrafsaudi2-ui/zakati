@@ -1,0 +1,17 @@
+{
+  "name": "Zakati — Your zakat, computed clearly",
+  "short_name": "Zakati",
+  "description": "Multi-currency zakat calculation that runs entirely on your device.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f4ec",
+  "theme_color": "#0a7c5a",
+  "orientation": "portrait",
+  "categories": ["finance", "lifestyle", "productivity"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": []
+}

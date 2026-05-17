@@ -1,0 +1,13 @@
+{
+  "name": "@zakati/engine",
+  "version": "0.1.0",
+  "description": "Pure-function zakat calculation engine.",
+  "type": "module",
+  "main": "./dist/engine.js",
+  "types": "./dist/engine.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsx src/test.ts"
+  },
+  "license": "MIT"
+}

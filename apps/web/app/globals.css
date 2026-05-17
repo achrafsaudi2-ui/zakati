@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Zakati design tokens — CSS-first config (Tailwind v4)
+   ========================================================================== */
+
+@theme {
+  /* Brand palette */
+  --color-emerald-50:  #e8f4ee;
+  --color-emerald-100: #b9dfca;
+  --color-emerald-200: #8acaa7;
+  --color-emerald-400: #2da37a;
+  --color-emerald-500: #0a7c5a;   /* primary */
+  --color-emerald-600: #086448;
+  --color-emerald-700: #064c36;
+  --color-emerald-900: #032818;
+
+  --color-gold-50:  #faf3df;
+  --color-gold-100: #f1dfa3;
+  --color-gold-300: #e3c965;
+  --color-gold-500: #d4af37;       /* accent */
+  --color-gold-700: #9c7e1d;
+  --color-gold-900: #5e4a0e;
+
+  --color-cream-50:  #fefdfa;       /* surface, pure */
+  --color-cream-100: #f8f4ec;       /* canvas */
+  --color-cream-200: #e8e0d0;       /* hairline borders on cream */
+  --color-cream-400: #b4a98e;
+
+  --color-charcoal-50:  #f5f5f4;
+  --color-charcoal-200: #d3d1c7;
+  --color-charcoal-400: #888780;
+  --color-charcoal-500: #5f5e5a;    /* muted text */
+  --color-charcoal-700: #2c2c2a;
+  --color-charcoal-900: #1a1d21;    /* body text on cream */
+
+  /* Semantic */
+  --color-success: var(--color-emerald-500);
+  --color-warning: var(--color-gold-500);
+  --color-danger: #c25a4a;
+
+  /* Typography */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Geist', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+  --font-mono: ui-monospace, 'JetBrains Mono', 'Menlo', monospace;
+
+  /* Radii */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Shadows — used sparingly, no decorative drop shadows */
+  --shadow-sheet: 0 -10px 32px -8px rgba(26, 29, 33, 0.18);
+  --shadow-card: 0 1px 2px rgba(26, 29, 33, 0.04);
+}
+
+/* ==========================================================================
+   Base styles
+   ========================================================================== */
+
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: light;
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-cream-100);
+    color: var(--color-charcoal-900);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variant-numeric: tabular-nums;
+    min-height: 100dvh;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Numbers always tabular for clean financial figures */
+  [data-numeric] { font-variant-numeric: tabular-nums; }
+
+  /* Focus state — visible but not aggressive */
+  :focus-visible {
+    outline: 2px solid var(--color-emerald-500);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Disable iOS double-tap zoom on buttons */
+  button { touch-action: manipulation; }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  /* Container with mobile-first padding, max-width for tablet/desktop */
+  .container-app {
+    width: 100%;
+    max-width: 28rem; /* ~448px — mobile-feel even on desktop */
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  /* Glassy header */
+  .surface-app {
+    background: var(--color-cream-50);
+  }
+
+  /* Tab focus highlight */
+  .ring-brand:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-emerald-500);
+  }
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes count-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-pulse-soft { animation: pulse-soft 1.6s ease-in-out infinite; }
+.animate-slide-up { animation: slide-up 320ms var(--ease-out-soft); }
+.animate-count-up { animation: count-up 240ms var(--ease-out-soft); }
