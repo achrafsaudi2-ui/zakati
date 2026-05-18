@@ -1,6 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
+import { useShallow } from 'zustand/shallow';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import type {
@@ -177,15 +178,17 @@ export const useZakatStore = create<ZakatState>()(
  */
 export function useResultsAcrossViews(): Record<View, CalcOutput> | null {
   const { primaryCurrency, zakatDate, fxRates, nisab, assets, liabilities, prepaid } =
-    useZakatStore((s) => ({
-      primaryCurrency: s.primaryCurrency,
-      zakatDate: s.zakatDate,
-      fxRates: s.fxRates,
-      nisab: s.nisab,
-      assets: s.assets,
-      liabilities: s.liabilities,
-      prepaid: s.prepaid,
-    }));
+    useZakatStore(
+      useShallow((s) => ({
+        primaryCurrency: s.primaryCurrency,
+        zakatDate: s.zakatDate,
+        fxRates: s.fxRates,
+        nisab: s.nisab,
+        assets: s.assets,
+        liabilities: s.liabilities,
+        prepaid: s.prepaid,
+      })),
+    );
 
   if (!fxRates || !nisab) return null;
 
