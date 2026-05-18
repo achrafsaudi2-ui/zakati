@@ -7,12 +7,13 @@ import { AmountInput, CurrencyPicker } from '@/components/fields';
 import { useZakatStore } from '@/lib/store';
 import { generateId, formatMoney } from '@/lib/utils';
 import type { BusinessAssets } from '@zakati/engine';
+import { useShallow } from 'zustand/shallow';
 
 export function BusinessAssetsForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) =>
-    s.assets.filter((a): a is BusinessAssets => a.kind === 'business'),
+  const existing = useZakatStore(
+    useShallow((s) => s.assets.filter((a): a is BusinessAssets => a.kind === 'business')),
   );
 
   const [label, setLabel] = useState('');

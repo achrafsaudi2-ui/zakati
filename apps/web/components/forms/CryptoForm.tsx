@@ -7,11 +7,12 @@ import { AmountInput, ToggleRow } from '@/components/fields';
 import { useZakatStore } from '@/lib/store';
 import { generateId, formatMoney } from '@/lib/utils';
 import type { Crypto } from '@zakati/engine';
+import { useShallow } from 'zustand/shallow';
 
 export function CryptoForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) => s.assets.filter((a): a is Crypto => a.kind === 'crypto'));
+  const existing = useZakatStore(useShallow((s) => s.assets.filter((a): a is Crypto => a.kind === 'crypto')));
 
   const [token, setToken] = useState('');
   const [quantity, setQuantity] = useState<number>();

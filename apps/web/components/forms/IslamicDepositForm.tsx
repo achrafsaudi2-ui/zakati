@@ -7,6 +7,7 @@ import { AmountInput, CurrencyPicker, ToggleRow } from '@/components/fields';
 import { useZakatStore } from '@/lib/store';
 import { generateId, cn } from '@/lib/utils';
 import type { IslamicDeposit } from '@zakati/engine';
+import { useShallow } from 'zustand/shallow';
 
 const DEPOSIT_TYPES = [
   { key: 'murabaha' as const, label: 'Murabaha', icon: PiggyBank, hint: 'Cost-plus deposit' },
@@ -17,8 +18,8 @@ const DEPOSIT_TYPES = [
 export function IslamicDepositForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) =>
-    s.assets.filter((a): a is IslamicDeposit => a.kind === 'islamic_deposit'),
+  const existing = useZakatStore(
+    useShallow((s) => s.assets.filter((a): a is IslamicDeposit => a.kind === 'islamic_deposit')),
   );
 
   const [label, setLabel] = useState('');

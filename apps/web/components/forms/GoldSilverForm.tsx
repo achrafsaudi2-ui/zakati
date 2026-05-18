@@ -7,11 +7,12 @@ import { AmountInput, KaratInput, ToggleRow } from '@/components/fields';
 import { useZakatStore } from '@/lib/store';
 import { generateId, cn } from '@/lib/utils';
 import type { PreciousMetal } from '@zakati/engine';
+import { useShallow } from 'zustand/shallow';
 
 export function GoldSilverForm() {
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) =>
-    s.assets.filter((a): a is PreciousMetal => a.kind === 'precious_metal'),
+  const existing = useZakatStore(
+    useShallow((s) => s.assets.filter((a): a is PreciousMetal => a.kind === 'precious_metal')),
   );
 
   const [type, setType] = useState<'gold' | 'silver'>('gold');

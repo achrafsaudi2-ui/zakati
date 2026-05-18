@@ -7,12 +7,13 @@ import { AmountInput, CurrencyPicker, ToggleRow } from '@/components/fields';
 import { useZakatStore } from '@/lib/store';
 import { generateId } from '@/lib/utils';
 import type { RentalIncomeCash } from '@zakati/engine';
+import { useShallow } from 'zustand/shallow';
 
 export function RentalIncomeForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) =>
-    s.assets.filter((a): a is RentalIncomeCash => a.kind === 'rental_income_cash'),
+  const existing = useZakatStore(
+    useShallow((s) => s.assets.filter((a): a is RentalIncomeCash => a.kind === 'rental_income_cash')),
   );
 
   const [label, setLabel] = useState('');

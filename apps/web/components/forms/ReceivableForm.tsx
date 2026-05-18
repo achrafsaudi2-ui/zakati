@@ -7,6 +7,7 @@ import { AmountInput, CurrencyPicker, ToggleRow } from '@/components/fields';
 import { useZakatStore } from '@/lib/store';
 import { generateId, cn } from '@/lib/utils';
 import type { Receivable } from '@zakati/engine';
+import { useShallow } from 'zustand/shallow';
 
 const STATUSES = [
   {
@@ -35,8 +36,8 @@ const STATUSES = [
 export function ReceivableForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) =>
-    s.assets.filter((a): a is Receivable => a.kind === 'receivable'),
+  const existing = useZakatStore(
+    useShallow((s) => s.assets.filter((a): a is Receivable => a.kind === 'receivable')),
   );
 
   const [label, setLabel] = useState('');

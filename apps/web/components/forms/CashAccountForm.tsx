@@ -10,14 +10,15 @@ import { useZakatStore } from '@/lib/store';
 import { generateId } from '@/lib/utils';
 import type { CashAccount } from '@zakati/engine';
 import type { ExtractedAccount } from '@zakati/document-pipeline';
+import { useShallow } from 'zustand/shallow';
 
 const NEXT_CATEGORY_OR_LIABILITIES = '/liabilities';
 
 export function CashAccountForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existingCashAccounts = useZakatStore((s) =>
-    s.assets.filter((a): a is CashAccount => a.kind === 'cash_account'),
+  const existingCashAccounts = useZakatStore(
+    useShallow((s) => s.assets.filter((a): a is CashAccount => a.kind === 'cash_account')),
   );
 
   const [uploadOpen, setUploadOpen] = useState(false);

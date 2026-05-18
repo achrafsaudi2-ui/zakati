@@ -6,12 +6,13 @@ import { AmountInput, CurrencyPicker, ToggleRow } from '@/components/fields';
 import { useZakatStore } from '@/lib/store';
 import { generateId } from '@/lib/utils';
 import type { CashOnHand } from '@zakati/engine';
+import { useShallow } from 'zustand/shallow';
 
 export function CashOnHandForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) =>
-    s.assets.filter((a): a is CashOnHand => a.kind === 'cash_on_hand'),
+  const existing = useZakatStore(
+    useShallow((s) => s.assets.filter((a): a is CashOnHand => a.kind === 'cash_on_hand')),
   );
 
   const [amount, setAmount] = useState<number>();

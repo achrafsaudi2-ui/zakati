@@ -10,11 +10,12 @@ import { useZakatStore } from '@/lib/store';
 import { generateId, cn } from '@/lib/utils';
 import type { Stock } from '@zakati/engine';
 import type { ExtractedAccount } from '@zakati/document-pipeline';
+import { useShallow } from 'zustand/shallow';
 
 export function StockForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) => s.assets.filter((a): a is Stock => a.kind === 'stock'));
+  const existing = useZakatStore(useShallow((s) => s.assets.filter((a): a is Stock => a.kind === 'stock')));
 
   const [uploadOpen, setUploadOpen] = useState(false);
   const [label, setLabel] = useState('');

@@ -7,12 +7,13 @@ import { AmountInput, CurrencyPicker } from '@/components/fields';
 import { useZakatStore } from '@/lib/store';
 import { generateId, formatMoney } from '@/lib/utils';
 import type { P2PInvestment } from '@zakati/engine';
+import { useShallow } from 'zustand/shallow';
 
 export function P2PInvestmentForm() {
   const primaryCurrency = useZakatStore((s) => s.primaryCurrency);
   const upsertAsset = useZakatStore((s) => s.upsertAsset);
-  const existing = useZakatStore((s) =>
-    s.assets.filter((a): a is P2PInvestment => a.kind === 'p2p_investment'),
+  const existing = useZakatStore(
+    useShallow((s) => s.assets.filter((a): a is P2PInvestment => a.kind === 'p2p_investment')),
   );
 
   const [platform, setPlatform] = useState('');
