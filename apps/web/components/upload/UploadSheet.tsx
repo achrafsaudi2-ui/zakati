@@ -21,7 +21,7 @@ interface UploadSheetProps {
 export function UploadSheet({
   open,
   onOpenChange,
-  accept = '.pdf,.png,.jpg,.jpeg,.csv',
+  accept = '.pdf,.png,.jpg,.jpeg,.csv,.xlsx,.xls',
   onAccept,
 }: UploadSheetProps) {
   const [phase, setPhase] = useState<Phase>('idle');
@@ -50,14 +50,31 @@ export function UploadSheet({
 
     // Lazy-load the pipeline so the initial bundle stays light
     try {
+      // Excel files: convert to CSV in-browser using the bundled SheetJS library
+      // before handing off to the existing CSV-aware pipeline. Stays on-device.
+      let workingFile = selected;
+      const lowerName = selected.name.toLowerCase();
+      if (lowerName.endsWith('.xlsx') || lowerName.endsWith('.xls')) {
+        setSubstep('Converting Excel to CSV…');
+        const XLSX = await loadXlsxLibrary();
+        const buf = await selected.arrayBuffer();
+        const wb = XLSX.read(buf, { type: 'array' });
+        const firstSheetName = wb.SheetNames[0];
+        if (!firstSheetName) throw new Error('Excel file has no sheets.');
+        const sheet = wb.Sheets[firstSheetName];
+        const csvText = XLSX.utils.sheet_to_csv(sheet);
+        const csvName = selected.name.replace(/\.xls[x]?$/i, '.csv');
+        workingFile = new File([csvText], csvName, { type: 'text/csv' });
+      }
+
       const { createDefaultPipeline } = await import('@zakati/document-pipeline');
       const { pipeline } = createDefaultPipeline();
 
-      const fileType = inferFileType(selected);
+      const fileType = inferFileType(workingFile);
       const result = await pipeline.parse(
         {
-          file: selected,
-          fileName: selected.name,
+          file: workingFile,
+          fileName: workingFile.name,
           fileType,
           source: 'file_picker',
         },
@@ -170,7 +187,7 @@ function IdleState({
           <Upload className="w-5 h-5 text-emerald-500" />
         </div>
         <p className="text-[13px] font-medium text-charcoal-900">Choose a file</p>
-        <p className="text-[11px] text-charcoal-500">PDF, image, or CSV</p>
+        <p className="text-[11px] text-charcoal-500">PDF, Excel, CSV or image</p>
       </button>
 
       <div className="grid grid-cols-3 gap-2 mb-4">
@@ -400,6 +417,41 @@ function ErrorState({
 // =============================================================================
 // Helpers
 // =============================================================================
+
+// Loads SheetJS from /vendor/xlsx.full.min.js on first xlsx upload.
+// Bundled with the deployment so nothing is fetched from a third-party CDN.
+type XlsxLib = {
+  read: (data: ArrayBuffer | Uint8Array, opts: { type: string }) => {
+    SheetNames: string[];
+    Sheets: Record<string, unknown>;
+  };
+  utils: { sheet_to_csv: (sheet: unknown) => string };
+};
+function loadXlsxLibrary(): Promise<XlsxLib> {
+  const w = window as unknown as { XLSX?: XlsxLib };
+  if (w.XLSX) return Promise.resolve(w.XLSX);
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[data-xlsx-loader]');
+    if (existing) {
+      existing.addEventListener('load', () => {
+        if (w.XLSX) resolve(w.XLSX);
+        else reject(new Error('XLSX library loaded but global not found.'));
+      });
+      existing.addEventListener('error', () => reject(new Error('Failed to load xlsx library.')));
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = '/vendor/xlsx.full.min.js';
+    script.async = true;
+    script.dataset.xlsxLoader = 'true';
+    script.onload = () => {
+      if (w.XLSX) resolve(w.XLSX);
+      else reject(new Error('XLSX library loaded but global not found.'));
+    };
+    script.onerror = () => reject(new Error('Failed to load xlsx library.'));
+    document.head.appendChild(script);
+  });
+}
 
 function inferFileType(f: File): 'pdf' | 'image' | 'csv' | 'text' {
   if (f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')) return 'pdf';
