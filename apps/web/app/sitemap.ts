@@ -1,5 +1,9 @@
 import type { MetadataRoute } from 'next';
 
+// Required by Next.js 15 when `output: 'export'` is enabled.
+// Tells the build to emit a static sitemap.xml file at build time.
+export const dynamic = 'force-static';
+
 const SITE_URL = 'https://zakati.app';
 
 /**
